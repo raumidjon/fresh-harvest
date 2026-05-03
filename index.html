@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreshHarvest - Premium Fruits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.1.0/index.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="fresh.css" />
+  </head>
+  <body class="bg-gray-50">
+    <div id="overlay" class="overlay fixed inset-0 bg-black/50 z-40"></div>
+
+    <div
+      id="toast"
+      class="toast fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-800 text-white px-6 py-3 rounded-full shadow-2xl z-50 flex items-center gap-2"
+    >
+      <svg class="w-5 h-5 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span id="toastMsg">Added to cart!</span>
+    </div>
+
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-sm z-30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center text-white text-xl"
+            >
+              🍃
+            </div>
+            <span class="text-xl font-bold text-gray-800">FreshHarvest</span>
+          </div>
+
+          <div class="hidden md:flex items-center gap-8">
+            <a href="#" class="text-gray-600 hover:text-emerald-600 font-medium transition">Home</a>
+            <a href="#products" class="text-gray-600 hover:text-emerald-600 font-medium transition"
+              >Products</a
+            >
+            <a href="#about" class="text-gray-600 hover:text-emerald-600 font-medium transition"
+              >About</a
+            >
+            <a href="#contact" class="text-gray-600 hover:text-emerald-600 font-medium transition"
+              >Contact</a
+            >
+          </div>
+
+          <div class="flex items-center gap-4">
+            <button id="searchToggle" class="p-2 hover:bg-gray-100 rounded-full transition">
+              <svg
+                class="w-5 h-5 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+            <button id="cartBtn" class="relative p-2 hover:bg-gray-100 rounded-full transition">
+              <svg
+                class="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
+                />
+              </svg>
+              <span
+                id="cartBadge"
+                class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full badge-count"
+                >0</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="searchBar" class="hidden max-w-7xl mx-auto px-4 pb-4">
+        <div class="relative">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search fruits..."
+            class="w-full px-4 py-2 pl-10 border border-gray-200 rounded-full bg-gray-50 focus:bg-white transition"
+          />
+          <svg
+            class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero-gradient pt-24 pb-16 md:pt-32 md:pb-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 text-8xl float-anim">🍎</div>
+        <div class="absolute top-32 right-20 text-7xl float-anim" style="animation-delay: 0.5s">
+          🍊
+        </div>
+        <div class="absolute bottom-10 left-1/4 text-6xl float-anim" style="animation-delay: 1s">
+          🍇
+        </div>
+        <div class="absolute top-20 right-1/3 text-5xl float-anim" style="animation-delay: 1.5s">
+          🍓
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="text-white slide-up">
+            <div
+              class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm"
+            >
+              🌿 100% Organic & Fresh
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+              Nature's Best<br />
+              <span class="text-emerald-200">Delivered Fresh</span>
+            </h1>
+            <p class="text-lg text-emerald-100 mb-8 max-w-lg">
+              Farm-fresh fruits delivered to your doorstep. Hand-picked daily from local organic
+              farms for maximum freshness and flavor.
+            </p>
+            <div class="flex gap-4">
+              <a
+                href="#products"
+                class="px-8 py-3 bg-white text-emerald-800 rounded-full font-semibold hover:bg-emerald-50 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              >
+                Shop Now
+              </a>
+              <button
+                class="px-8 py-3 border-2 border-white/30 text-white rounded-full font-semibold hover:bg-white/10 transition backdrop-blur-sm"
+              >
+                Learn More
+              </button>
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <div class="relative">
+              <div
+                class="w-80 h-80 mx-auto bg-white/10 rounded-full backdrop-blur-sm flex items-center justify-center"
+              >
+                <span class="text-[12rem] leading-none drop-shadow-2xl">🍊</span>
+              </div>
+              <div
+                class="absolute -top-4 -right-4 bg-white rounded-2xl p-3 shadow-xl slide-up"
+                style="animation-delay: 0.2s"
+              >
+                <div class="flex items-center gap-2">
+                  <span class="text-2xl">⭐</span>
+                  <div>
+                    <p class="font-bold text-gray-800">4.9/5</p>
+                    <p class="text-xs text-gray-500">10k+ Reviews</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute -bottom-4 -left-4 bg-white rounded-2xl p-3 shadow-xl slide-up"
+                style="animation-delay: 0.4s"
+              >
+                <div class="flex items-center gap-2">
+                  <span class="text-2xl">🚚</span>
+                  <div>
+                    <p class="font-bold text-gray-800">Free Delivery</p>
+                    <p class="text-xs text-gray-500">Orders $50+</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-6 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-2xl"
+            >
+              🌱
+            </div>
+            <div>
+              <p class="font-semibold text-gray-800">100% Organic</p>
+              <p class="text-xs text-gray-500">Certified farms</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-2xl"
+            >
+              🚀
+            </div>
+            <div>
+              <p class="font-semibold text-gray-800">Fast Delivery</p>
+              <p class="text-xs text-gray-500">Same day</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-2xl"
+            >
+              💰
+            </div>
+            <div>
+              <p class="font-semibold text-gray-800">Best Prices</p>
+              <p class="text-xs text-gray-500">Direct from farms</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-2xl"
+            >
+              🔄
+            </div>
+            <div>
+              <p class="font-semibold text-gray-800">Easy Returns</p>
+              <p class="text-xs text-gray-500">No questions asked</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Fresh Collection</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">
+          Hand-picked premium fruits sourced from the finest organic farms around the world.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <button
+          class="category-btn active px-6 py-2 rounded-full font-medium transition"
+          data-category="all"
+        >
+          All Fruits
+        </button>
+        <button
+          class="category-btn px-6 py-2 rounded-full font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition"
+          data-category="tropical"
+        >
+          🌴 Tropical
+        </button>
+        <button
+          class="category-btn px-6 py-2 rounded-full font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition"
+          data-category="berries"
+        >
+          🫐 Berries
+        </button>
+        <button
+          class="category-btn px-6 py-2 rounded-full font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition"
+          data-category="citrus"
+        >
+          🍋 Citrus
+        </button>
+        <button
+          class="category-btn px-6 py-2 rounded-full font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition"
+          data-category="stone"
+        >
+          🍑 Stone Fruits
+        </button>
+      </div>
+
+      <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </section>
+
+    <section id="about" class="py-16 bg-gradient-to-br from-emerald-50 to-green-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="relative">
+            <div class="bg-white rounded-3xl p-8 shadow-xl">
+              <div class="grid grid-cols-2 gap-4">
+                <div
+                  class="bg-gradient-to-br from-orange-100 to-orange-50 rounded-2xl p-6 text-center"
+                >
+                  <span class="text-5xl">🥭</span>
+                  <p class="mt-2 font-semibold text-gray-700">Mangoes</p>
+                </div>
+                <div class="bg-gradient-to-br from-red-100 to-red-50 rounded-2xl p-6 text-center">
+                  <span class="text-5xl">🍓</span>
+                  <p class="mt-2 font-semibold text-gray-700">Strawberries</p>
+                </div>
+                <div
+                  class="bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl p-6 text-center"
+                >
+                  <span class="text-5xl">🍇</span>
+                  <p class="mt-2 font-semibold text-gray-700">Grapes</p>
+                </div>
+                <div
+                  class="bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl p-6 text-center"
+                >
+                  <span class="text-5xl">🍌</span>
+                  <p class="mt-2 font-semibold text-gray-700">Bananas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+              From Farm to Your Table
+            </h2>
+            <p class="text-gray-600 mb-6 text-lg">
+              We work directly with local farmers to bring you the freshest, most delicious fruits.
+              Our commitment to sustainability means every fruit is grown with care for the
+              environment.
+            </p>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <div
+                  class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5"
+                >
+                  ✓
+                </div>
+                <p class="text-gray-600">Direct partnerships with 50+ certified organic farms</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div
+                  class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5"
+                >
+                  ✓
+                </div>
+                <p class="text-gray-600">Rigorous quality control and freshness testing</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div
+                  class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5"
+                >
+                  ✓
+                </div>
+                <p class="text-gray-600">Eco-friendly packaging and carbon-neutral delivery</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-bold text-gray-800 mb-4">Get in Touch</h2>
+          <p class="text-gray-500">Have questions? We'd love to hear from you.</p>
+        </div>
+        <form id="contactForm" class="max-w-2xl mx-auto space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <input
+                type="text"
+                placeholder="Name"
+                required
+                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-emerald-500 transition"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                placeholder="Email"
+                required
+                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-emerald-500 transition"
+              />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+            <textarea
+              rows="4"
+              placeholder="Your message"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-emerald-500 transition resize-none"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full py-3 bg-gradient-to-r from-emerald-600 to-green-500 text-white rounded-xl font-semibold hover:shadow-lg transition transform hover:-translate-y-0.5"
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+   
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                🍃
+              </div>
+              <span class="text-lg font-bold">FreshHarvest</span>
+            </div>
+            <p class="text-gray-400 text-sm">
+              Bringing nature's finest fruits directly to your doorstep since 2020.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-gray-400 text-sm">
+              <li><a href="#" class="hover:text-emerald-400 transition">Home</a></li>
+              <li><a href="#products" class="hover:text-emerald-400 transition">Products</a></li>
+              <li><a href="#about" class="hover:text-emerald-400 transition">About Us</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Support</h4>
+            <ul class="space-y-2 text-gray-400 text-sm">
+              <li><a href="#" class="hover:text-emerald-400 transition">FAQ</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition">Shipping Info</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition">Returns</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Newsletter</h4>
+            <div class="flex">
+              <input
+                type="email"
+                placeholder="Your email"
+                class="flex-1 px-4 py-2 bg-gray-800 rounded-l-lg text-sm focus:outline-none"
+              />
+              <button class="px-4 py-2 bg-emerald-600 rounded-r-lg hover:bg-emerald-700 transition">
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+          <p>&copy; 2026 FreshHarvest. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="cartSidebar"
+      class="cart-sidebar fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 flex flex-col"
+    >
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-800">Shopping Cart</h2>
+        <button id="closeCart" class="p-2 hover:bg-gray-100 rounded-full transition">
+          <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+
+      <div class="p-6 border-t border-gray-100 bg-gray-50">
+        <div class="flex justify-between mb-2">
+          <span class="text-gray-600">Subtotal</span>
+          <span id="subtotal" class="font-semibold">$0.00</span>
+        </div>
+        <div class="flex justify-between mb-2">
+          <span class="text-gray-600">Shipping</span>
+          <span id="shipping" class="font-semibold text-emerald-600">Free</span>
+        </div>
+        <div class="flex justify-between mb-4 pt-2 border-t border-gray-200">
+          <span class="font-bold text-lg">Total</span>
+          <span id="total" class="font-bold text-lg text-emerald-600">$0.00</span>
+        </div>
+        <button
+          id="checkoutBtn"
+          class="w-full py-3 bg-gradient-to-r from-emerald-600 to-green-500 text-white rounded-xl font-semibold hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="checkoutModal"
+      class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+    >
+      <div
+        class="checkout-modal bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md mx-4 pointer-events-auto"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">Checkout</h2>
+          <button id="closeCheckout" class="p-2 hover:bg-gray-100 rounded-full transition">
+            <svg
+              class="w-5 h-5 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <form id="checkoutForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <input
+              type="text"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+            <input
+              type="text"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+            <input
+              type="text"
+              required
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl"
+            />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Expiry</label>
+              <input
+                type="text"
+                required
+                placeholder="MM/YY"
+                maxlength="5"
+                class="w-full px-4 py-3 border border-gray-200 rounded-xl"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+              <input
+                type="text"
+                required
+                placeholder="123"
+                maxlength="3"
+                class="w-full px-4 py-3 border border-gray-200 rounded-xl"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="w-full py-3 bg-gradient-to-r from-emerald-600 to-green-500 text-white rounded-xl font-semibold hover:shadow-lg transition mt-2"
+          >
+            Pay <span id="checkoutTotal">$0.00</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="successModal"
+      class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+    >
+      <div
+        class="checkout-modal bg-white rounded-3xl shadow-2xl p-8 w-full max-w-sm mx-4 text-center pointer-events-auto"
+      >
+        <div
+          class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <svg class="w-10 h-10 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Order Placed!</h2>
+        <p class="text-gray-500 mb-6">
+          Thank you for your purchase. Your fresh fruits will be delivered soon!
+        </p>
+        <button
+          id="closeSuccess"
+          class="px-8 py-3 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700 transition"
+        >
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <script src="fresh.js"></script>
+  </body>
+</html>
