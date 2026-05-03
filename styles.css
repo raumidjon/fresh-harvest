@@ -2,6 +2,13 @@
   font-family: 'Inter', sans-serif;
 }
 
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
 .hero-gradient {
   background: linear-gradient(135deg, #064e3b 0%, #065f46 30%, #047857 60%, #10b981 100%);
 }
@@ -150,8 +157,10 @@
   }
 }
 
-input:focus,
-select:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+.checkout-modal {
+  pointer-events: none;
+}
+
+.checkout-modal.show {
+  pointer-events: auto;
 }
